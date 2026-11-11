@@ -46,6 +46,7 @@ public class WaterfallClimb : Touch_Minigame
                 break;
         }
 
+        //Create fish
         fish = Instantiate(fish, waterfallBottom.position, Quaternion.identity, gameObject.transform);
     }
 
