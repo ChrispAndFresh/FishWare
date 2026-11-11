@@ -13,7 +13,7 @@ public enum Dificulty { Easy, Medium, Hard };
 public abstract class Base_Minigame : MonoBehaviour
 {
     //Dificulty settings
-    private Dificulty dificulty;
+    [SerializeField] protected Dificulty dificulty;
 
     [Header("Game Timer")]
     //How long each minigame lasts

@@ -1,16 +1,17 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Touch_Minigame : MonoBehaviour
+public class Touch_Minigame : Base_Minigame
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    /*
+     * Chris Pimentel
+     * 11-11-26
+     * Provides controls for all touched based minigames
+     */
 
-    // Update is called once per frame
-    void Update()
+   public virtual void OnTouch(InputAction.CallbackContext context)
     {
-        
+        if (context.performed)
+            print("Screen Touched");
     }
 }
