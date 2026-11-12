@@ -92,7 +92,7 @@ public abstract class Base_Minigame : MonoBehaviour
 
     protected IEnumerator RunTimer()
     {
-        timerObject.SetTimer(gameTimer);
+        //timerObject.SetTimer(gameTimer);
 
         yield return new WaitForSeconds(gameTimer);
 

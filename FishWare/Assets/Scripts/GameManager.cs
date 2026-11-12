@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 
         //Set Timer to visible
         timerObject.gameObject.SetActive(true);
-        timerObject.FillTimer();
+        //timerObject.FillTimer();
 
         //Start Minigames
         StartMinigames();
@@ -283,7 +283,7 @@ public class GameManager : MonoBehaviour
             print("Ther are no games left to play");
 
             //Reset Timer
-            timerObject.FillTimer();
+            //timerObject.FillTimer();
             timerObject.gameObject.SetActive(false);
 
             //Make screenwipe invisible
@@ -303,7 +303,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(screenWipeTime);
 
-        timerObject.FillTimer(); //Reset Timer
+        //timerObject.FillTimer(); //Reset Timer
         Destroy(currentMinigame.gameObject); //Remove current minigame
 
         //Show number of minigames left
