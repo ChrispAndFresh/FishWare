@@ -19,12 +19,16 @@ public abstract class Base_Minigame : MonoBehaviour
     //How long each minigame lasts
     [SerializeField] private float gameTimeLength = 5f;
     private float gameTimer;
+    [SerializeField] protected float pauseForInstructions = 1f;
 
     [Header("Timer Dificulty Modifiers")]
     //Time for each minigame changes based on dificulty
     [SerializeField] protected float timerModifierEasy = 1f;
     [SerializeField] protected float timerModifierMedium = 0.75f;
     [SerializeField] protected float timerModifierHard = 0.5f;
+
+    [Header("Game Information")]
+    [SerializeField] protected string instructions;
 
     //Determines if the mingame was Won/Lost
     protected bool winState = false;
@@ -53,10 +57,21 @@ public abstract class Base_Minigame : MonoBehaviour
 
         print("Time Length: " + gameTimer + " seconds");
 
-        //StartTimer
-        StartCoroutine(RunTimer());
     }
 
+    public virtual IEnumerator StartGame()
+    {
+        //Flash instructions
+
+        yield return new WaitForSeconds(pauseForInstructions);
+
+        //Allow for player control
+    }
+
+    public virtual void EndGame()
+    {
+        //Take away player control
+    }
 
     private IEnumerator RunTimer()
     {
@@ -67,4 +82,8 @@ public abstract class Base_Minigame : MonoBehaviour
         print("Time Elapsed: " + Time.time);
     }
 
+    public void FlashInstructions()
+    {
+
+    }
 }

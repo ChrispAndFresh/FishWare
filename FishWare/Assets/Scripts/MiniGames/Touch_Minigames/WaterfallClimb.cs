@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,7 +17,8 @@ public class WaterfallClimb : Touch_Minigame
     private float targetNumber;
 
     [Header("Waterfall Climbing")]
-    [SerializeField] private float swimPower = 20f;
+    [SerializeField] private float baseSwimPower = 20f;
+    private float swimPower;
     [SerializeField] private float swimDecay = 0.5f;
     private float swimMeter;
 
@@ -48,6 +50,25 @@ public class WaterfallClimb : Touch_Minigame
 
         //Create fish
         fish = Instantiate(fish, waterfallBottom.position, Quaternion.identity, gameObject.transform);
+
+        //Player cannot climb waterfall until game start
+        swimPower = 0f;
+    }
+
+    public override IEnumerator StartGame()
+    {
+        //Flash Instructions
+
+        yield return new WaitForSeconds(pauseForInstructions);
+
+        //Remove Instructions
+
+        swimPower = baseSwimPower;
+    }
+
+    public override void EndGame()
+    {
+        swimPower = 0f;
     }
 
     public override void OnTouch(InputAction.CallbackContext context)
