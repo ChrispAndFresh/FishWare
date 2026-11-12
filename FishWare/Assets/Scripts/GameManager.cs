@@ -241,6 +241,8 @@ public class GameManager : MonoBehaviour
         {
             currentMinigame = Instantiate(PickRandomMinigame(), Vector3.zero, Quaternion.identity);
 
+            yield return new WaitForSeconds(1f);
+
             StartCoroutine(ScreenWipe());
 
             yield return new WaitForSeconds(screenWipeTime);
@@ -265,8 +267,12 @@ public class GameManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             float t = Mathf.Clamp01(elapsedTime / screenWipeTime);
-  
-            screenWipe.transform.position = Vector3.Lerp(startPosition.position, screenWipeEnd.position, t);
+
+            //print(elapsedTime);
+            //print(t);
+            //print(Vector3.Lerp(startPosition.position, screenWipeEnd.position, t));
+
+            screenWipe.transform.position = Vector3.Lerp(startPosition.position, screenWipeEnd.position, t / 10);
 
             yield return null;
 

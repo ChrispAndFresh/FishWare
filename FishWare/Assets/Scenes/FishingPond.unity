@@ -558,7 +558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1690216187
 Transform:
   m_ObjectHideFlags: 0
@@ -568,7 +568,7 @@ Transform:
   m_GameObject: {fileID: 1690216186}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -7}
+  m_LocalPosition: {x: 0, y: -2, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1081,7 +1081,7 @@ PrefabInstance:
       objectReference: {fileID: 604525005}
     - target: {fileID: 6651315578209257029, guid: a340d7cea37d0364fae9ec39e95be2d0, type: 3}
       propertyPath: screenWipeTime
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6651315578209257029, guid: a340d7cea37d0364fae9ec39e95be2d0, type: 3}
       propertyPath: backgroundScreen
