@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 /*
  * Chris Pimentel
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float screenWipeTime = 4f;
     [SerializeField] private GameObject screenWipe;
     [SerializeField] private Transform screenWipeEnd;
+    [SerializeField] private Transform screenWipeStart;
     [SerializeField] private float borderCreationTime = 2f;
     [SerializeField][Range(0f, 1f)] private float cornerPercentTime = 0.5f;
     [SerializeField] private GameObject[] borderCorners = new GameObject[4]; 
@@ -30,7 +32,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] edges2;
     [SerializeField] private GameObject[] backgroundEdges;
 
+    [Header("Timer")]
+    [SerializeField] private Timer timerObject;
+
     private bool blackScreenUp;
+    private bool screenTransitionUp;
 
     public Dificulty dificulty { get; private set; }
 
@@ -52,11 +58,27 @@ public class GameManager : MonoBehaviour
 
         //Sets screen to false;
         blackScreenUp = false;
+        //Set screen transitioned to false
+        screenTransitionUp = false;
 
         //Screen Wipe is inactive
         screenWipe.SetActive(false);
+      
+        //Timer is inactive
+        timerObject.gameObject.SetActive(false);
 
+
+        StartCoroutine(TransitionToMinigames());
+    }
+
+
+    private IEnumerator TransitionToMinigames()
+    {
         StartCoroutine(FadeScreen());
+
+        yield return new WaitForSeconds(screenChangeTime);
+
+        StartCoroutine(BorderCreation());
     }
 
     /// <summary>
@@ -96,8 +118,6 @@ public class GameManager : MonoBehaviour
         //Flips check on whether screen is up or down
         blackScreenUp = !blackScreenUp;
 
-        //Form border
-        StartCoroutine(BorderCreation());
     }
 
     private IEnumerator BorderCreation()
@@ -131,6 +151,10 @@ public class GameManager : MonoBehaviour
 
         //Create Screenwipe
         screenWipe.SetActive(true);
+
+        //Set Timer to visible
+        timerObject.gameObject.SetActive(true);
+        timerObject.FillTimer();
 
         //Start Minigames
         StartMinigames();
@@ -236,9 +260,11 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator PlayNextMinigame()
     {
+        print("Checking if there are minigames left to play");
         //If there are still games to be played
         if (numberOfGamesLeft != 0)
         {
+            print("There are mingames left to play");
             currentMinigame = Instantiate(PickRandomMinigame(), Vector3.zero, Quaternion.identity);
 
             yield return new WaitForSeconds(1f);
@@ -251,6 +277,39 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(currentMinigame.StartGame());
         }
+
+        else if (numberOfGamesLeft <= 0)
+        {
+            print("Ther are no games left to play");
+
+            //Reset Timer
+            timerObject.FillTimer();
+            timerObject.gameObject.SetActive(false);
+
+            //Make screenwipe invisible
+            screenWipe.SetActive(false);
+
+            StartCoroutine(ResetBorder());
+        }
+    }
+
+    public IEnumerator MinigameTransition()
+    {
+        print("Transitioning Minigames");
+        //One Minigame down
+        numberOfGamesLeft--;
+
+        StartCoroutine(ScreenWipe());
+
+        yield return new WaitForSeconds(screenWipeTime);
+
+        timerObject.FillTimer(); //Reset Timer
+        Destroy(currentMinigame.gameObject); //Remove current minigame
+
+        //Show number of minigames left
+
+        StartCoroutine(PlayNextMinigame());
+
     }
 
     private IEnumerator ScreenWipe()
@@ -261,6 +320,18 @@ public class GameManager : MonoBehaviour
         float elapsedTime = 0f;
 
         Transform startPosition = screenWipe.transform;
+        Vector3 targetPosition;
+
+        if (screenTransitionUp) //If screenwipe is up
+        {
+            targetPosition = screenWipeStart.position;
+        }
+        else //If screenwipe is down
+        {
+            targetPosition = screenWipeEnd.position;
+        }
+
+        print("End position: " + targetPosition);
 
         while (elapsedTime < screenWipeTime)
         {
@@ -272,13 +343,14 @@ public class GameManager : MonoBehaviour
             //print(t);
             //print(Vector3.Lerp(startPosition.position, screenWipeEnd.position, t));
 
-            screenWipe.transform.position = Vector3.Lerp(startPosition.position, screenWipeEnd.position, t / 10);
+            screenWipe.transform.position = Vector3.Lerp(startPosition.position, targetPosition, t / 10);
 
             yield return null;
 
         }
 
-        screenWipe.transform.position = screenWipeEnd.position;
+        screenWipe.transform.position = targetPosition;
+        screenTransitionUp = !screenTransitionUp; //Flip check
 
         print("Screen Wipe Ended");
     }

@@ -34,13 +34,19 @@ public abstract class Base_Minigame : MonoBehaviour
     //Determines if the mingame was Won/Lost
     protected bool winState = false;
     
-    //Reference to GameManager
+    //Reference to GameManager & Timer
     private GameManager gameManager;
+    private Timer timerObject;
 
-    private void Awake()
+
+    /// <summary>
+    /// Plays on minigame awakening
+    /// </summary>
+    protected void OnAwake()
     {
+        //Assign GameManager
+        gameManager = FindAnyObjectByType<GameManager>();
         //Get dificulty
-<<<<<<< HEAD
         dificulty = gameManager.dificulty;
         //Get Timer
         timerObject = FindAnyObjectByType<Timer>();
@@ -58,13 +64,10 @@ public abstract class Base_Minigame : MonoBehaviour
             print("Timer found");
         else
             print("Timer not found");
-=======
-        dificulty = FindAnyObjectByType<GameManager>().dificulty;
->>>>>>> parent of 7ed8d71 (Screen Transitions complete)
 
         //Change gameTimer based on dificulty
-        switch (dificulty) 
-        { 
+        switch (dificulty)
+        {
             case Dificulty.Easy:
                 gameTimer = gameTimeLength * timerModifierEasy;
                 break;
@@ -77,7 +80,6 @@ public abstract class Base_Minigame : MonoBehaviour
         }
 
         print("Time Length: " + gameTimer + " seconds");
-
     }
 
     public virtual IEnumerator StartGame()
@@ -93,15 +95,23 @@ public abstract class Base_Minigame : MonoBehaviour
     public virtual void EndGame()
     {
         //Take away player control
+
+        StartCoroutine(gameManager.MinigameTransition());
+
+        //Remove minigame 
     }
 
-    private IEnumerator RunTimer()
+    protected IEnumerator RunTimer()
     {
+        timerObject.SetTimer(gameTimer);
+
         yield return new WaitForSeconds(gameTimer);
 
         //End Minigame
         print("Minigame Ended");
         print("Time Elapsed: " + Time.time);
+
+        EndGame();
     }
 
     /*

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Touch_Minigame : Base_Minigame
+public abstract class Touch_Minigame : Base_Minigame
 {
     /*
      * Chris Pimentel
