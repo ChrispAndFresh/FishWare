@@ -932,6 +932,7 @@ PrefabInstance:
     m_Modifications:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     - target: {fileID: 1238436997325137278, guid: 2298f2b0e8406574f88cf872d847c904, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -940,6 +941,8 @@ PrefabInstance:
       propertyPath: m_Value
       value: 0.551
       objectReference: {fileID: 0}
+=======
+>>>>>>> parent of 7ed8d71 (Screen Transitions complete)
 =======
 >>>>>>> parent of 7ed8d71 (Screen Transitions complete)
 =======
