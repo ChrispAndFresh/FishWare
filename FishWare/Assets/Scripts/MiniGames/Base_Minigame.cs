@@ -43,7 +43,6 @@ public abstract class Base_Minigame : MonoBehaviour
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
         dificulty = gameManager.dificulty;
         //Get Timer
         timerObject = FindAnyObjectByType<Timer>();
@@ -61,9 +60,6 @@ public abstract class Base_Minigame : MonoBehaviour
             print("Timer found");
         else
             print("Timer not found");
-=======
-        dificulty = FindAnyObjectByType<GameManager>().dificulty;
->>>>>>> parent of 7ed8d71 (Screen Transitions complete)
 =======
         dificulty = FindAnyObjectByType<GameManager>().dificulty;
 >>>>>>> parent of 7ed8d71 (Screen Transitions complete)
