@@ -30,8 +30,6 @@ public class WaterfallClimb : Touch_Minigame
 
     private void Awake()
     {
-        OnAwake();
-
         //Set defaults
         swimMeter = 0f;
         winState = false;
@@ -64,7 +62,7 @@ public class WaterfallClimb : Touch_Minigame
 
         yield return new WaitForSeconds(pauseForInstructions);
 
-        StartCoroutine(RunTimer());
+        //Remove Instructions
 
         swimPower = baseSwimPower;
     }
@@ -72,8 +70,6 @@ public class WaterfallClimb : Touch_Minigame
     public override void EndGame()
     {
         swimPower = 0f;
-
-        base.EndGame();
     }
 
     public override void OnTouch(InputAction.CallbackContext context)
