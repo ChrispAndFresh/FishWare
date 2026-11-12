@@ -60,6 +60,7 @@ public class WaterfallClimb : Touch_Minigame
     public override IEnumerator StartGame()
     {
         //Flash Instructions
+        //StartCoroutine(FlashInstructions());
 
         yield return new WaitForSeconds(pauseForInstructions);
 

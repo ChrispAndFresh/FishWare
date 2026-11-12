@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 /*
  * Chris Pimentel
@@ -19,7 +20,7 @@ public abstract class Base_Minigame : MonoBehaviour
     //How long each minigame lasts
     [SerializeField] private float gameTimeLength = 5f;
     private float gameTimer;
-    [SerializeField] protected float pauseForInstructions = 1f;
+    [SerializeField] protected float pauseForInstructions = 1.5f;
 
     [Header("Timer Dificulty Modifiers")]
     //Time for each minigame changes based on dificulty
@@ -50,6 +51,15 @@ public abstract class Base_Minigame : MonoBehaviour
         //Get Timer
         timerObject = FindAnyObjectByType<Timer>();
 
+        /*
+        //Update instructions UI
+        if (instructionPanel.GetComponent<Canvas>() != null)
+        {
+            //Update text
+            instructionPanel.GetComponentInChildren<TMP_Text>().text = instructions;
+        }
+        */
+
         if (timerObject != null)
             print("Timer found");
         else
@@ -75,6 +85,7 @@ public abstract class Base_Minigame : MonoBehaviour
     public virtual IEnumerator StartGame()
     {
         //Flash instructions
+        //StartCoroutine(FlashInstructions());
 
         yield return new WaitForSeconds(pauseForInstructions);
 
@@ -103,8 +114,18 @@ public abstract class Base_Minigame : MonoBehaviour
         EndGame();
     }
 
-    public void FlashInstructions()
+    /*
+    protected IEnumerator FlashInstructions()
     {
+        float timeElapsed = 0f;
 
+        while (timeElapsed < pauseForInstructions)
+        {
+            
+            instructionPanel.SetActive(!instructionPanel.activeSelf);
+            yield return new WaitForSeconds(pauseForInstructions / 4);
+            timeElapsed += pauseForInstructions / 4;
+        }
     }
+    */
 }
