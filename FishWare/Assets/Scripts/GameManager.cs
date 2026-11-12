@@ -16,16 +16,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     { 
-        StartCoroutine(StartMinigames());
-    }
-
-    public IEnumerator StartMinigames()
-    {
         StartCoroutine(ChangeScreen());
-         
-        yield return new WaitForSeconds(screenChangeTime);
-
-        print("Transition ended");
     }
 
     private IEnumerator ChangeScreen()
